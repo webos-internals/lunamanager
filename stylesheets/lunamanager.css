@@ -1,0 +1,9 @@
+body.palm-dark
+{
+	background: url(../images/backdrop.png) center center;
+}
+
+.main .palm-row-wrapper .palm-body-text
+{
+	margin-top: 0px;
+}

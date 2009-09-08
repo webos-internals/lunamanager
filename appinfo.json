@@ -1,0 +1,9 @@
+{
+	"id": "ws.junk.lunamanager",
+	"version": "0.0.1",
+	"vendor": "junk.ws",
+	"type": "web",
+	"main": "index.html",
+	"title": "Luna Manager",
+	"icon": "icon.png"
+}
