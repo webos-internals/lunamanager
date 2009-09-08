@@ -1,9 +1,16 @@
 {
-	"id": "ws.junk.lunamanager",
+	"title": "Luna Manager",
+	"id": "org.webosinternals.lunamanager",
 	"version": "0.0.1",
-	"vendor": "junk.ws",
+	"release_date":	"8-Sep-2009",
+	"vendor": "WebOS Internals",
+	"vendor_email":	"support@webos-internals.org",
+	"vendor_url": "http://www.webos-internals.org/wiki/Application:LunaManager",
 	"type": "web",
 	"main": "index.html",
-	"title": "Luna Manager",
-	"icon": "icon.png"
+	"icon": "icon.png",
+	"removable": "true",
+	"noWindow": true,
+	"theme" : "light",
+	"noDeprecatedStyles" : true 
 }
