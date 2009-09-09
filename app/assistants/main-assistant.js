@@ -4,6 +4,8 @@ MainAssistant.prototype.setup = function()
 {
 	try
 	{
+		this.ipkgServiceVersion = 2;
+		
 		$$('body')[0].addClassName('palm-dark');
 		$$('body')[0].removeClassName('palm-default');
 		
@@ -64,9 +66,36 @@ MainAssistant.prototype.setup = function()
 	}
 }
 
-MainAssistant.prototype.callbackFunction = function(data, item)
+MainAssistant.prototype.callbackFunction = function(payload, item)
 {
-	for (d in data) alert(d + ': ' + data[d]);
+	//for (p in payload) alert(p + ': ' + payload[p]);
+	
+	if (!payload) 
+	{
+		this.alertMessage('Luna Manager', 'This Error shouldn\'t happen...');
+	}
+	else if (payload.errorCode == -1) 
+	{
+		if (payload.errorText == "org.webosinternals.ipkgservice is not running.") 
+		{
+			this.alertMessage('Luna Manager', 'The Package Manager Service is not running. Did you remember to install it? If you did, perhaps you should try rebooting your phone.');
+		}
+		else 
+		{
+			this.alertMessage('Luna Manager', payload.errorText);
+		}
+	}
+	else if (payload.errorCode == "ErrorGenericUnknownMethod") 
+	{
+		this.alertMessage('Luna Manager', 'The Package Manger Service you\'re running isn\'t compatible with this version of Preware. Please update it with WebOS Quick Install. [1]');
+	}
+	else 
+	{
+		if (payload.apiVersion && payload.apiVersion < this.ipkgServiceVersion) 
+		{
+			this.alertMessage('Luna Manager', 'The Package Manger Service you\'re running isn\'t compatible with this version of Preware. Please update it with WebOS Quick Install. [2]');
+		}
+	}
 	
 	this.controller.get(item).mojo.deactivate();
 }
