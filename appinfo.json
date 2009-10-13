@@ -1,8 +1,8 @@
 {
 	"title": "Luna Manager",
 	"id": "org.webosinternals.lunamanager",
-	"version": "0.0.2",
-	"release_date":	"8-Sep-2009",
+	"version": "0.0.3",
+	"release_date":	"12-Oct-2009",
 	"vendor": "WebOS Internals",
 	"vendor_email":	"support@webos-internals.org",
 	"vendor_url": "http://www.webos-internals.org/wiki/Application:LunaManager",

@@ -74,7 +74,7 @@ MainAssistant.prototype.callbackFunction = function(payload, item)
 	{
 		this.alertMessage('Luna Manager', 'This Error shouldn\'t happen...');
 	}
-	else if (payload.errorCode == -1) 
+	else if (payload.errorCode == -1 && item != 'RestartJava') 
 	{
 		if (payload.errorText == "org.webosinternals.ipkgservice is not running.") 
 		{
