@@ -129,7 +129,7 @@ MainAssistant.prototype.doRestartLuna = function()
 		(
 			'luna://org.webosinternals.ipkgservice',
 			{
-				method: 'restartluna',
+				method: 'restartLuna',
 				onSuccess: this.callbackFunction.bindAsEventListener(this, 'RestartLuna'),
 				onFailure: this.callbackFunction.bindAsEventListener(this, 'RestartLuna')
 			}
@@ -150,7 +150,7 @@ MainAssistant.prototype.doRestartJava = function()
 		(
 			'palm://org.webosinternals.ipkgservice',
 			{
-				method: 'restartjava',
+				method: 'restartJava',
 				onSuccess: this.callbackFunction.bindAsEventListener(this, 'RestartJava'),
 				onFailure: this.callbackFunction.bindAsEventListener(this, 'RestartJava')
 			}
