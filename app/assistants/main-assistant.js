@@ -4,7 +4,7 @@ MainAssistant.prototype.setup = function()
 {
 	try
 	{
-		this.ipkgServiceVersion = 2;
+		this.ipkgServiceVersion = 12;
 		
 		$$('body')[0].addClassName('palm-dark');
 		$$('body')[0].removeClassName('palm-default');
@@ -54,10 +54,20 @@ MainAssistant.prototype.setup = function()
 			}
 		);
 		
-		this.controller.listen('Rescan',		Mojo.Event.tap, this.doRescan.bindAsEventListener(this));
+		this.controller.listen('Rescan',	Mojo.Event.tap, this.doRescan.bindAsEventListener(this));
 		this.controller.listen('RestartLuna',	Mojo.Event.tap, this.doRestartLuna.bindAsEventListener(this));
 		this.controller.listen('RestartJava',	Mojo.Event.tap, this.doRestartJava.bindAsEventListener(this));
 		
+		var r = new Mojo.Service.Request
+		(
+			'palm://org.webosinternals.ipkgservice',
+			{
+				method: 'version',
+				onSuccess: this.callbackFunction.bindAsEventListener(this),
+				onFailure: this.callbackFunction.bindAsEventListener(this)
+			}
+		);
+
 	}
 	catch (e)
 	{
@@ -72,13 +82,13 @@ MainAssistant.prototype.callbackFunction = function(payload, item)
 	
 	if (!payload) 
 	{
-		this.alertMessage('Luna Manager', 'This Error shouldn\'t happen...');
+		this.alertMessage('Luna Manager', $L("Cannot access the service. Have you installed Preware? If so, reboot your phone and try again."));
 	}
 	else if (payload.errorCode == -1 && item != 'RestartJava') 
 	{
 		if (payload.errorText == "org.webosinternals.ipkgservice is not running.") 
 		{
-			this.alertMessage('Luna Manager', 'The Package Manager Service is not running. Did you remember to install it? If you did, perhaps you should try rebooting your phone.');
+			this.alertMessage('Luna Manager', $L("The service is not running. Have you installed Preware? If so, reboot your phone and try again."));
 		}
 		else 
 		{
@@ -87,17 +97,17 @@ MainAssistant.prototype.callbackFunction = function(payload, item)
 	}
 	else if (payload.errorCode == "ErrorGenericUnknownMethod") 
 	{
-		this.alertMessage('Luna Manager', 'The Package Manger Service you\'re running isn\'t compatible with this version of Preware. Please update it with WebOS Quick Install. [1]');
+		this.alertMessage('Luna Manager', $L("The service version is too old. First try rebooting your phone, or reinstall Preware and try again."));
 	}
 	else 
 	{
 		if (payload.apiVersion && payload.apiVersion < this.ipkgServiceVersion) 
 		{
-			this.alertMessage('Luna Manager', 'The Package Manger Service you\'re running isn\'t compatible with this version of Preware. Please update it with WebOS Quick Install. [2]');
+			this.alertMessage('Luna Manager', $L("The service version is too old. First try rebooting your phone, or reinstall Preware and try again."));
 		}
 	}
 	
-	this.controller.get(item).mojo.deactivate();
+	if (item) this.controller.get(item).mojo.deactivate();
 }
 
 MainAssistant.prototype.doRescan = function()
@@ -182,7 +192,7 @@ MainAssistant.prototype.deactivate = function(event) {}
 
 MainAssistant.prototype.cleanup = function(event)
 {
-	this.controller.stopListening('Rescan',			Mojo.Event.tap, this.doRescan.bindAsEventListener(this));
+	this.controller.stopListening('Rescan',		Mojo.Event.tap, this.doRescan.bindAsEventListener(this));
 	this.controller.stopListening('RestartLuna',	Mojo.Event.tap, this.doRestartLuna.bindAsEventListener(this));
 	this.controller.stopListening('RestartJava',	Mojo.Event.tap, this.doRestartJava.bindAsEventListener(this));
 }
